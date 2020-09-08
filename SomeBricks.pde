@@ -60,9 +60,9 @@ void setup() {
                 current.move(event.swipeVec.x);
                 break;
             case VER_SWIPE:
-                if (event.swipeVec.y < 0) {
+                if (event.swipeVec.y < -15) {
                     current.speedDown();
-                } else {
+                } else if (event.swipeVec.y > 15){
                     current.speedUp();
                 }
                 break;
@@ -83,19 +83,7 @@ void draw() {
 
     // step ahead in time
     box2d.step();
-    /* check out of world bricks
-     for (int i = 0; i < bricks.size(); i++) {
-     Brick b = bricks.get(i);
-     if (b.underControl && !isIn(b)) {
-     
-     println("OUT");
-     b.killBody();
-     bricks.remove(i);
-     
-     }
-     }
-     */
-    println(current.body.getLinearVelocityFromLocalPoint(new Vec2(0, 0)).x);
+    
     // collision occured
     if (collision) {
         // new wind
@@ -129,30 +117,7 @@ void draw() {
             line(pos.x, pos.y, pos.x, height);
             popMatrix();
         }
-        switch (b.type) {
-        case RECTANGLE:
-            ((Rectangle) b).display();
-            break;
-
-        case SQUAR:
-            ((Square) b).display();
-            break;
-        case TECKO:
-            ((Tecko) b).display();
-            break;
-        case YELLOWL: 
-            ((YellowL) b).display();
-            break;
-        case PINKL: 
-            ((PinkL) b).display();
-            break;
-        case ORANGEZ:
-            ((OrangeZ) b).display();
-            break;
-        case REDZ:
-            ((RedZ) b).display();
-            break;
-        }
+        b.display();
     }
     base.display();
 }
@@ -187,63 +152,6 @@ void spawnRandomBrick() {
     }
     current = b;
     bricks.add(b);
-}
-Vec2 startVec;
-int startTime;
-boolean holding = false;
-/*
-void mousePressed() {
- startVec = new Vec2(mouseX, mouseY);
- startTime = millis();
- holding = true;
- println("MOUSE_PRESSED, x: " + mouseX +", y: " + mouseY);
- switch (mouseButton) {
- case 39:
- current.spin();
- break;
- case 37:
- current.speedUp();
- break;
- }
- }
- 
- void mouseDragged() {
- println("MOUSE_DRAGGED, x: " + mouseX +", y: " + mouseY);
- }
- 
- void mouseReleased() {
- println("MOUSE_RELEASED, x: " + mouseX +", y: " + mouseY);
- Vec2 endVec = new Vec2(mouseX, mouseY);
- int endTime = millis();
- holding = false;
- if (endVec.sub(startVec).length() < 10) {    // click
- if (endTime - startTime < 250) {    // quick click
- println("quick click");
- current.spin();
- }
- }
- current.speedDown();
- }
- */
-
-void keyPressed() {
-    switch (key) {
-    case 'a':
-        current.moveLeft();
-        break;
-    case 'd':
-        current.moveRight();
-        break;
-    case 'q':
-        translate(0, 100);
-        break;
-    case 'x':
-        if (bricks.size() >= 2) {
-            bricks.get(bricks.size()-2).killBody();
-            bricks.remove(bricks.size()-2);
-        }
-        break;
-    }
 }
 boolean comeback = true;
 boolean collision = false;

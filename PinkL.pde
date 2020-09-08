@@ -1,8 +1,7 @@
 class PinkL extends Brick {
     PinkL(float x, float y) {
-        super(x, y);
-        this.type = Types.PINKL;
-        makeBody(new Vec2(this.x, this.y));
+        super(x);
+        makeBody(new Vec2(x, y));
         body.setUserData(this);
     }
     int rect1W = 3*UNIT - SPACE;
@@ -50,9 +49,7 @@ class PinkL extends Brick {
         // Give it some initial random velocity
         body.setLinearVelocity(new Vec2(0, -10));
     }
-    void killBody() {
-        box2d.destroyBody(this.body);
-    }
+    
     void display() {
         // position
         Vec2 pos = box2d.getBodyPixelCoord(this.body);

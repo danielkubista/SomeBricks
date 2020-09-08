@@ -49,7 +49,7 @@ class Swiper extends Observable implements Runnable {
                 notifyObservers(new SwipeEvent(EventType.RELEASED, null));
             }
             if (prevMouse.isPressed && mousePressed) {
-                if (PVector.dist(prevMouse.pos, thisMouse.pos) > 10) {
+                if (PVector.dist(prevMouse.pos, thisMouse.pos) > 0) {
                     println("ad 4");
                     PVector diff = PVector.sub(thisMouse.pos, prevMouse.pos);
                     setChanged();

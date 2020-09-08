@@ -1,8 +1,7 @@
 class Square extends Brick {
     Square(float x, float y){
-        super(x, y);
-        this.type = Types.SQUAR;
-        makeBody(new Vec2(this.x, this.y));
+        super(x);
+        makeBody(new Vec2(x, y));
         body.setUserData(this);
     }
     final int WIDTH = 2*UNIT - SPACE;
@@ -36,9 +35,6 @@ class Square extends Brick {
 
         // Give it some initial random velocity
         body.setLinearVelocity(new Vec2(0, -10));
-    }
-    void killBody() {
-        box2d.destroyBody(this.body);
     }
     void display() {
         // position
