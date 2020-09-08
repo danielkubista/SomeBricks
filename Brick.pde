@@ -5,7 +5,7 @@ abstract class Brick {
     float x;
     float y;
     final int SPACE = 2;
-    final static int UNIT = 50;
+    final static int UNIT = 25;
     Brick(float x, float y) {
         this.x = x;
         this.y = y;
@@ -17,11 +17,16 @@ abstract class Brick {
     abstract void display();
     void speedUp() {
         //body.setLinearVelocity(new Vec2(0, -20 * log(bricksSpawned+1)));
-        body.setLinearVelocity(new Vec2(0, -40));
+        body.setLinearVelocity(new Vec2(0, -60));
     }
     void speedDown() {
         //body.setLinearVelocity(new Vec2(0, -10 * log(bricksSpawned+1)));
         body.setLinearVelocity(new Vec2(0, -20));
+    }
+    void move(float x){
+        Vec2 oldVec = body.getPosition();
+        oldVec.x += box2d.scalarPixelsToWorld(x);
+        body.setTransform(oldVec, body.getAngle());
     }
     void moveLeft() {
         Vec2 oldVec = body.getPosition();

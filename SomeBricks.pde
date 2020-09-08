@@ -6,7 +6,7 @@ import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.*;
 import org.jbox2d.dynamics.*;
 import org.jbox2d.dynamics.contacts.*;
-
+import java.util.*;
 
 // A reference to our box2d world
 Box2DProcessing box2d;
@@ -47,6 +47,35 @@ void setup() {
     //size(640, 960);
     fullScreen();
     orientation(PORTRAIT);
+
+    Swiper swiper = new Swiper();
+    swiper.addObserver(new Observer() {
+        public void update(Observable obs, Object obj) {
+            SwipeEvent event = (SwipeEvent) obj;
+            switch(event.type) {
+            case CLICK:
+                current.spin();
+                break;
+            case HOR_SWIPE:
+                current.move(event.swipeVec.x);
+                break;
+            case VER_SWIPE:
+                if (event.swipeVec.y < 0) {
+                    current.speedDown();
+                } else {
+                    current.speedUp();
+                }
+                break;
+            case RELEASED:
+                current.speedDown();
+                break;
+            default:
+                break;
+            }
+        }
+    }
+    );
+    swiper.startThread();
 }
 Vec2 wind = new Vec2(20, 0);
 void draw() {
@@ -66,16 +95,7 @@ void draw() {
      }
      }
      */
-
-    if (holding) {
-        if (new Vec2(mouseX, mouseY).sub(startVec).length() < 10) {    // click
-            if (millis() - startTime > 250) {  // long click
-                current.speedUp();
-                println("long click");
-            }
-        }
-    }
-
+    println(current.body.getLinearVelocityFromLocalPoint(new Vec2(0, 0)).x);
     // collision occured
     if (collision) {
         // new wind
@@ -96,7 +116,7 @@ void draw() {
     // apply wind
     for (Brick b : bricks) {
         if (!b.underControl) {
-            b.applyWind(wind);
+            //b.applyWind(wind);
         }
     }
     // display
@@ -171,39 +191,40 @@ void spawnRandomBrick() {
 Vec2 startVec;
 int startTime;
 boolean holding = false;
+/*
 void mousePressed() {
-    startVec = new Vec2(mouseX, mouseY);
-    startTime = millis();
-    holding = true;
-    println("MOUSE_PRESSED, x: " + mouseX +", y: " + mouseY);
-    switch (mouseButton) {
-    case 39:
-        current.spin();
-        break;
-    case 37:
-        current.speedUp();
-        break;
-    }
-}
-
-void mouseDragged() {
-    println("MOUSE_DRAGGED, x: " + mouseX +", y: " + mouseY);
-}
-
-void mouseReleased() {
-    println("MOUSE_RELEASED, x: " + mouseX +", y: " + mouseY);
-    Vec2 endVec = new Vec2(mouseX, mouseY);
-    int endTime = millis();
-    holding = false;
-    if (endVec.sub(startVec).length() < 10) {    // click
-        if (endTime - startTime < 250) {    // quick click
-            println("quick click");
-            current.spin();
-        }
-    }
-    current.speedDown();
-}
-
+ startVec = new Vec2(mouseX, mouseY);
+ startTime = millis();
+ holding = true;
+ println("MOUSE_PRESSED, x: " + mouseX +", y: " + mouseY);
+ switch (mouseButton) {
+ case 39:
+ current.spin();
+ break;
+ case 37:
+ current.speedUp();
+ break;
+ }
+ }
+ 
+ void mouseDragged() {
+ println("MOUSE_DRAGGED, x: " + mouseX +", y: " + mouseY);
+ }
+ 
+ void mouseReleased() {
+ println("MOUSE_RELEASED, x: " + mouseX +", y: " + mouseY);
+ Vec2 endVec = new Vec2(mouseX, mouseY);
+ int endTime = millis();
+ holding = false;
+ if (endVec.sub(startVec).length() < 10) {    // click
+ if (endTime - startTime < 250) {    // quick click
+ println("quick click");
+ current.spin();
+ }
+ }
+ current.speedDown();
+ }
+ */
 
 void keyPressed() {
     switch (key) {
