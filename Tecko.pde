@@ -3,9 +3,8 @@ class Tecko extends Brick {
     final int totalW = 3*UNIT;
     final int totalH = 2*UNIT;
     Tecko(float x, float y) {
-        super(x, y);
-        this.type = Types.TECKO;
-        makeBody(new Vec2(this.x, this.y));
+        super(x);
+        makeBody(new Vec2(x, y));
         body.setUserData(this);
         img = loadImage("tecko.png");
     }
@@ -52,9 +51,6 @@ class Tecko extends Brick {
 
         // Give it some initial random velocity
         body.setLinearVelocity(new Vec2(0, -10));
-    }
-    void killBody() {
-        box2d.destroyBody(this.body);
     }
     void display() {
         // position

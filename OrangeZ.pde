@@ -3,9 +3,8 @@ class OrangeZ extends Brick {
     final int totalW = 3*UNIT;
     final int totalH = 2*UNIT;
     OrangeZ(float x, float y) {
-        super(x, y);
-        this.type = Types.ORANGEZ;
-        makeBody(new Vec2(this.x, this.y));
+        super(x);
+        makeBody(new Vec2(x, y));
         body.setUserData(this);
         img = loadImage("orangeZ.png");
     }

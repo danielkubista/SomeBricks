@@ -1,8 +1,7 @@
 class YellowL extends Brick {
     YellowL(float x, float y) {
-        super(x, y);
-        this.type = Types.YELLOWL;
-        makeBody(new Vec2(this.x, this.y));
+        super(x);
+        makeBody(new Vec2(x, y));
         body.setUserData(this);
     }
     int rect1W = 3*UNIT - SPACE;

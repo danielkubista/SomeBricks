@@ -2,9 +2,8 @@ class Rectangle extends Brick {
     final int WIDTH = 4*UNIT - super.SPACE;
     final int HEIGHT = UNIT - SPACE;
     Rectangle(float x, float y) {
-        super(x, y);
-        this.type = Types.RECTANGLE;
-        makeBody(new Vec2(this.x, this.y));
+        super(x);
+        makeBody(new Vec2(x, y));
         body.setUserData(this);
     }
     void makeBody(Vec2 center) {
@@ -36,9 +35,6 @@ class Rectangle extends Brick {
 
         // Give it some initial random velocity
         body.setLinearVelocity(new Vec2(0, -10));
-    }
-    void killBody() {
-        box2d.destroyBody(this.body);
     }
     void display() {
         // position
